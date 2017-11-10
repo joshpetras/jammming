@@ -23,6 +23,18 @@ class App extends Component {
         "name": "Tiny Dancer",
         "artist": "The White Raven",
         "album": "Tiny Dancer"
+      }],
+      "playlistName": "Josh's List",
+      "playlistTracks": [{
+        "id": "4",
+        "name": "Freedom of 76",
+        "artist": "Ween",
+        "album": "Chocolate and Cheese"
+      }, {
+        "id": "5",
+        "name": "Today",
+        "artist": "Smashing Pumpkins",
+        "album": "Siamese Dream"
       }]
     };
   }
@@ -35,7 +47,7 @@ class App extends Component {
           <SearchBar />
           <div className="App-playlist">
             <SearchResults searchResults={this.state.searchResults} />
-            <Playlist searchResults={this.state.searchResults} />
+            <Playlist playlistName={this.state.playlistName} playlistTracks={this.state.playlistTracks} />
           </div>
         </div>
       </div>
