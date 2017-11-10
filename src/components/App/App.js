@@ -5,6 +5,28 @@ import SearchResults from '../SearchResults/SearchResults';
 import Playlist from '../Playlist/Playlist';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      "searchResults": [{
+        "id": "1",
+        "name": "Tiny Dancer",
+        "artist": "Elton John",
+        "album": "Madman Across The Water"
+      }, {
+        "id": "2",
+        "name": "Tiny Dancer",
+        "artist": "Tim McGraw",
+        "album": "Love Story"
+      }, {
+        "id": "3",
+        "name": "Tiny Dancer",
+        "artist": "The White Raven",
+        "album": "Tiny Dancer"
+      }]
+    };
+  }
+
   render() {
     return (
       <div>
@@ -12,8 +34,8 @@ class App extends Component {
         <div className="App">
           <SearchBar />
           <div className="App-playlist">
-            <SearchResults />
-            <Playlist />
+            <SearchResults searchResults={this.state.searchResults} />
+            <Playlist searchResults={this.state.searchResults} />
           </div>
         </div>
       </div>
