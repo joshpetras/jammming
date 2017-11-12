@@ -23,7 +23,7 @@ const Spotify = {
   },
 
   search(searchTerm) {
-    const accessToken = this.getAccessToken();
+    const accessToken = Spotify.getAccessToken();
     const headers = {
       Authorization: `Bearer ${accessToken}`
     };
@@ -44,7 +44,7 @@ const Spotify = {
 
   savePlaylist(playlistName, trackURIs) {
     if (playlistName && trackURIs.length) {
-      const accessToken = this.getAccessToken();
+      const accessToken = Spotify.getAccessToken();
       const headers = {
         Authorization: `Bearer ${accessToken}`
       };
