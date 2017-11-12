@@ -11,19 +11,7 @@ class App extends Component {
     this.state = {
       "searchResults": [],
       "playlistName": "New Playlist",
-      "playlistTracks": [{
-        "id": "4",
-        "uri": "spotify:track:2WuctaHNqb2rfjYwpMoUvn",
-        "name": "Freedom of 76",
-        "artist": "Ween",
-        "album": "Chocolate and Cheese"
-      }, {
-        "id": "5",
-        "uri": "spotify:track:4vEsyIQv7XDy3inDmi5ho8",
-        "name": "Today",
-        "artist": "Smashing Pumpkins",
-        "album": "Siamese Dream"
-      }]
+      "playlistTracks": []
     };
 
     this.addTrack = this.addTrack.bind(this);
@@ -55,7 +43,12 @@ class App extends Component {
   savePlaylist() {
     let tracks = this.state.playlistTracks;
     let trackURIs = tracks.map(trackIndex => trackIndex.uri);
-    console.log(trackURIs); // remove after implementing full functionality
+    Spotify.savePlaylist(this.state.playlistName, trackURIs).then(() => {
+      this.setState({
+        playlistName: 'New Playlist',
+        searchResults: []
+      });
+    });
   }
 
   search(searchTerm) {
