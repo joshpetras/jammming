@@ -3,30 +3,13 @@ import './App.css';
 import SearchBar from '../SearchBar/SearchBar';
 import SearchResults from '../SearchResults/SearchResults';
 import Playlist from '../Playlist/Playlist';
+import Spotify from '../../util/Spotify';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      "searchResults": [{
-        "id": "1",
-        "uri": "spotify:track:6DU8kLZJHv1N3Bki2Uuzq7",
-        "name": "Tiny Dancer",
-        "artist": "Elton John",
-        "album": "Madman Across The Water"
-      }, {
-        "id": "2",
-        "uri": "spotify:track:7wWhGTwphcduqqkKJz7DTu",
-        "name": "Tiny Dancer",
-        "artist": "Tim McGraw",
-        "album": "Love Story"
-      }, {
-        "id": "3",
-        "uri": "spotify:track:45Ra1HSfULTXvGHx7OEO2b",
-        "name": "Tiny Dancer",
-        "artist": "The White Raven",
-        "album": "Tiny Dancer"
-      }],
+      "searchResults": [],
       "playlistName": "New Playlist",
       "playlistTracks": [{
         "id": "4",
@@ -76,7 +59,9 @@ class App extends Component {
   }
 
   search(searchTerm) {
-    console.log(searchTerm); // remove after implementing full functionality
+    Spotify.search(searchTerm).then(results => {
+      this.setState({searchResults: results});
+    });
   }
 
   render() {
