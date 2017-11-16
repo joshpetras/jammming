@@ -50,8 +50,6 @@ const Spotify = {
       };
       let userID;
       let playlistID;
-      console.log(accessToken);
-      console.log(headers);
       return fetch('https://api.spotify.com/v1/me', {headers: headers}).then(response => {
         if (response.ok) {
           return response.json();
