@@ -3,6 +3,7 @@ import './App.css';
 import SearchBar from '../SearchBar/SearchBar';
 import SearchResults from '../SearchResults/SearchResults';
 import Playlist from '../Playlist/Playlist';
+import ConnectBtn from '../ConnectBtn/ConnectBtn';
 import Spotify from '../../util/Spotify';
 
 class App extends Component {
@@ -11,7 +12,9 @@ class App extends Component {
     this.state = {
       "searchResults": [],
       "playlistName": "New Playlist",
-      "playlistTracks": []
+      "playlistTracks": [],
+      "connected": '',
+      "profileImage": ''
     };
 
     this.addTrack = this.addTrack.bind(this);
@@ -19,6 +22,15 @@ class App extends Component {
     this.updatePlaylistName = this.updatePlaylistName.bind(this);
     this.savePlaylist = this.savePlaylist.bind(this);
     this.search = this.search.bind(this);
+    this.connect = this.connect.bind(this);
+  }
+
+  componentWillMount() {
+    const newAccessToken = window.location.href.match(/access_token=([^&]*)/);
+    const newExpiresIn = window.location.href.match(/expires_in=([^&]*)/);
+    if (newAccessToken && newExpiresIn) {
+      this.connect();
+    }
   }
 
   addTrack(track) {
@@ -40,16 +52,29 @@ class App extends Component {
     this.setState({playlistName: name});
   }
 
+  connect() {
+    Spotify.connect().then(response => {
+      if(response.id) {
+        this.setState({
+          connected: response.id,
+          profileImage: response.images[0].url
+        });
+      }
+    });
+  }
+
   savePlaylist() {
     let tracks = this.state.playlistTracks;
-    let trackURIs = tracks.map(trackIndex => trackIndex.uri);
-    Spotify.savePlaylist(this.state.playlistName, trackURIs).then(() => {
-      this.setState({
-        playlistName: 'New Playlist',
-        playlistTracks: []
+    if(tracks.length) {
+      let trackURIs = tracks.map(trackIndex => trackIndex.uri);
+      Spotify.savePlaylist(this.state.playlistName, trackURIs).then(() => {
+        this.setState({
+          playlistName: 'New Playlist',
+          playlistTracks: []
+        });
+        document.getElementById('Playlist-name').value = this.state.playlistName;
       });
-      document.getElementById('Playlist-name').value = this.state.playlistName;
-    });
+    }
   }
 
   search(searchTerm) {
@@ -63,7 +88,8 @@ class App extends Component {
       <div>
         <h1>Ja<span className="highlight">mmm</span>ing</h1>
         <div className="App">
-          <SearchBar onSearch={this.search} />
+          <ConnectBtn onConnect={this.connect} connected={this.state.connected} imageUrl={this.state.profileImage}/>
+          <SearchBar onSearch={this.search} connected={this.state.connected}/>
           <div className="App-playlist">
             <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack} />
             <Playlist playlistName={this.state.playlistName} playlistTracks={this.state.playlistTracks} onRemove={this.removeTrack} onNameChange={this.updatePlaylistName} onSave={this.savePlaylist} />

@@ -1,6 +1,6 @@
 const clientId = 'b1893b1ebc9e4491ba2ea34565e2d9f1';
-//const redirect_uri = 'http://localhost:3000/';
-const redirect_uri = 'https://joshpetras.github.io/jammming/';
+const redirect_uri = 'http://localhost:3000/';
+//const redirect_uri = 'https://joshpetras.github.io/jammming/';
 let accessToken;
 
 const Spotify = {
@@ -18,9 +18,29 @@ const Spotify = {
       window.history.pushState('Access Token', null, '/');
       return accessToken;
     } else {
-      const accessUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirect_uri}`;
+      const accessUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=playlist-modify-public&show_dialog=true&redirect_uri=${redirect_uri}`;
       window.location = accessUrl;
     }
+  },
+
+  connect() {
+    const accessToken = Spotify.getAccessToken();
+    const headers = {
+      Authorization: `Bearer ${accessToken}`
+    };
+    return fetch(`https://api.spotify.com/v1/me`, {headers: headers}).then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error('Request failed!');
+    }, networkError => {
+      console.log(networkError.message);
+    }).then(jsonResponse => {
+      if (!jsonResponse.id) {
+        return '';
+      }
+      return jsonResponse;
+    });
   },
 
   search(searchTerm) {

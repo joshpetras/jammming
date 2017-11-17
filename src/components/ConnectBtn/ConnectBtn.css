@@ -1,0 +1,44 @@
+.Connect {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem 0;
+}
+
+.Connect-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 12rem;
+  margin-top: 0rem;
+  padding: .77rem 0rem;
+  border-radius: 54px;
+  background-color: #2ebd59;
+  text-align: center;
+  font-size: .83rem;
+  transition: background-color .25s;
+}
+
+
+.Connect-button:hover {
+  background-color: #1ed760;
+}
+
+.Profile-image {
+  display: none;
+  width: auto;
+  height: 3rem;
+  margin-bottom: .5rem;
+  border-radius: 1.5rem 1.5rem .5rem .5rem;
+  box-shadow: 0 1px 1px 1px #000000;
+}
+
+.Profile-image:hover {
+  
+}
+
+.Visible {
+  display: inline-block;
+}
