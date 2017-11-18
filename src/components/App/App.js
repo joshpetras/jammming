@@ -23,6 +23,7 @@ class App extends Component {
     this.savePlaylist = this.savePlaylist.bind(this);
     this.search = this.search.bind(this);
     this.connect = this.connect.bind(this);
+    this.disconnect = this.disconnect.bind(this);
   }
 
   componentWillMount() {
@@ -56,16 +57,21 @@ class App extends Component {
     Spotify.connect().then(response => {
       if(response.id) {
         this.setState({
-          connected: response.id,
+          connected: response.display_name,
           profileImage: response.images[0].url
         });
       }
     });
   }
 
+  disconnect() {
+    Spotify.disconnect();
+    window.location.reload();
+  }
+
   savePlaylist() {
     let tracks = this.state.playlistTracks;
-    if(tracks.length) {
+    if(tracks.length && this.state.playlistName) {
       let trackURIs = tracks.map(trackIndex => trackIndex.uri);
       Spotify.savePlaylist(this.state.playlistName, trackURIs).then(() => {
         this.setState({
@@ -88,7 +94,7 @@ class App extends Component {
       <div>
         <h1>Ja<span className="highlight">mmm</span>ing</h1>
         <div className="App">
-          <ConnectBtn onConnect={this.connect} connected={this.state.connected} imageUrl={this.state.profileImage}/>
+          <ConnectBtn onConnect={this.connect} onDisconnect={this.disconnect} connected={this.state.connected} imageUrl={this.state.profileImage}/>
           <SearchBar onSearch={this.search} connected={this.state.connected}/>
           <div className="App-playlist">
             <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack} />

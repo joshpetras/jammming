@@ -15,6 +15,7 @@ const Spotify = {
       accessToken = newAccessToken[1];
       const expiresIn = Number(newExpiresIn[1]);
       window.setTimeout(() => accessToken = '', expiresIn * 1000);
+      //window.history.pushState('Access Token', null, '/');
       window.history.pushState('Access Token', null, '/jammming/');
       return accessToken;
     } else {
@@ -41,6 +42,12 @@ const Spotify = {
       }
       return jsonResponse;
     });
+  },
+
+  disconnect() {
+    if (accessToken) {
+      window.setTimeout(() => accessToken = '', 0);
+    }
   },
 
   search(searchTerm) {

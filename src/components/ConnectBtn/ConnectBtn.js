@@ -9,7 +9,7 @@ class ConnectBtn extends React.Component {
 
   handleClick(event) {
     if (this.props.connected) {
-      window.location.reload();
+      this.props.onDisconnect();
     } else {
       this.props.onConnect();
     }
@@ -17,20 +17,28 @@ class ConnectBtn extends React.Component {
 
   render() {
     let buttonText;
+    let toolTip;
+    let buttonClass;
     let imageClass;
-    //this.props.connected ? buttonText = this.props.connected : buttonText = 'CONNECT TO SPOTIFY';
+
     if (this.props.connected) {
       buttonText = this.props.connected;
+      toolTip = (
+        <span className="tooltiptext">Disconnect from Spotify</span>
+      );
+      buttonClass = 'Disconnect-button tooltip';
       imageClass = 'Profile-image Visible'
     } else {
       buttonText = 'CONNECT TO SPOTIFY';
+      buttonClass = 'Connect-button';
       imageClass = 'Profile-image'
     }
     return (
       <div className='Connect'>
-        <a className='Connect-button' onClick={this.handleClick}>
+        <a className={buttonClass} onClick={this.handleClick}>
           <img className={imageClass} src={this.props.imageUrl} alt=''/>
           {buttonText}
+          {toolTip}
         </a>
       </div>
     );
