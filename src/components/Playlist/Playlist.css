@@ -17,7 +17,7 @@
   background: transparent;
   border-bottom: 1px solid #6f6f6f;
   font-family: 'Poppins', sans-serif;
-  font-size: 1.55rem;
+  font-size: 1.25rem;
   color: #fff;
 }
 
@@ -45,5 +45,11 @@
 @media only screen and (max-width: 1020px) {
   .Playlist {
     width: 90%;
+  }
+}
+
+@media only screen and (max-width: 375px) {
+  .Playlist input {
+    font-size: .99rem;
   }
 }
