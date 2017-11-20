@@ -20,7 +20,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 72px;
+  height: 85px;
 }
 
 .Track-information h3 {
@@ -31,4 +31,14 @@
   font-size: .83rem;
   font-weight: 300;
   color: rgba(256, 256, 256, 0.8);
+}
+
+@media only screen and (max-width: 375px) {
+  .Track-information h3 {
+    font-size: .8rem;
+  }
+
+  .Track-information p {
+    font-size: .7rem;
+  }
 }
